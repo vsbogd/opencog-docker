@@ -1,12 +1,12 @@
 # Step to take
-# 1. docker build --no-cache -t opencog/cogutil
-# 2. docker run --rm -it opencog/cogutil
+# 1. docker build --no-cache -t singularitynet/cogutil
+# 2. docker run --rm -it singularitynet/cogutil
 
-FROM opencog/opencog-deps
+FROM singularitynet/opencog-deps
 
 # Install repositories and dependencies
 # FIXME: when octools auto-updates remove this.
-ADD https://raw.githubusercontent.com/opencog/ocpkg/master/ocpkg \
+ADD https://raw.githubusercontent.com/singnet/ocpkg/master/ocpkg \
     /tmp/octool
 RUN chmod 755 /tmp/octool
 

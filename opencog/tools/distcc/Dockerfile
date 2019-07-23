@@ -3,7 +3,7 @@
 # docker build -t $USER/opencog-distcc .
 # docker run -d -p 3632:3632 $USER/opencog-distcc
 
-FROM opencog/opencog-deps
+FROM singularitynet/opencog-deps
 MAINTAINER David Hart "dhart@opencog.org"
 
 RUN apt-get -y update && \
