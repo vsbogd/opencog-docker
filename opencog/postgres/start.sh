@@ -4,7 +4,7 @@
 # 1. This script is used as an entrypoint and is created to make host dependent
 #    configurations easier.
 # 2. It implements the tweaks suggested @
-#    github.com/opencog/atomspace/tree/master/opencog/persist/sql#performance-tweaks
+#    github.com/singnet/atomspace/tree/master/opencog/persist/sql#performance-tweaks
 
 set -e
 

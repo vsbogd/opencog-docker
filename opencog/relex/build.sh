@@ -2,4 +2,4 @@
 #
 # Build the docker image for relex
 #
-docker build -t opencog/relex .
+docker build -t singularitynet/relex .

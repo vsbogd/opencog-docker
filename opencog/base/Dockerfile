@@ -1,6 +1,6 @@
 # For creating images with all the dependencies for development installed.
 #
-# docker build --no-cache -t opencog/opencog-deps .
+# docker build --no-cache -t singularitynet/opencog-deps .
 
 ARG VERSION=18.04
 FROM ubuntu:${VERSION}
@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install apt-transport-https software-properties-common sudo
 
 # Install repositories and dependencies
-ADD https://raw.githubusercontent.com/opencog/ocpkg/master/ocpkg \
+ADD https://raw.githubusercontent.com/singnet/ocpkg/master/ocpkg \
     /tmp/octool
 RUN apt-get install -y tzdata
 RUN chmod 755 /tmp/octool;  sync; /tmp/octool -rdpv -l default

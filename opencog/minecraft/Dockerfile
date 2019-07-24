@@ -1,4 +1,4 @@
-FROM opencog/opencog-dev:cli
+FROM singularitynet/opencog-dev:cli
 
 # ROS installation
 # https://github.com/osrf/docker_images/blob/master/ros/indigo/indigo-ros-core/

@@ -25,68 +25,70 @@ usage() {
 printf "Usage: ./%s [OPTIONS]
 
   OPTIONS:
-    -a Pull all images needed for development from hub.docker.com/u/opencog/
-    -b Build opencog/opencog-deps image. It is the base image for
+    -a Pull all images needed for development from hub.docker.com/u/singularitynet/
+    -b Build singularitynet/opencog-deps image. It is the base image for
        tools, cogutil, cogserver, and the buildbot images.
-    -c Builds opencog/cogutil image. It will build opencog/opencog-deps
+    -c Builds singularitynet/cogutil image. It will build singularitynet/opencog-deps
        if it hasn't been built, as it forms its base image.
-    -e Builds opencog/minecraft image. It will build all needed images if they
+    -e Builds singularitynet/minecraft image. It will build all needed images if they
        haven't already been built.
-    -j Builds opencog/jupyter image. It will add jupyter notebook to opencog/opencog-dev:cli
-    -m Builds opencog/moses image.
-    -p Builds opencog/postgres image.
-    -r Builds opencog/relex image.
-    -t Builds opencog/opencog-dev:cli image. It will build opencog/opencog-deps
-       and opencog/cogutil if they haven't been built, as they form its base
+    -j Builds singularitynet/jupyter image. It will add jupyter notebook to
+    singularitynet/opencog-dev:cli
+    -m Builds singularitynet/moses image.
+    -p Builds singularitynet/postgres image.
+    -r Builds singularitynet/relex image.
+    -t Builds singularitynet/opencog-dev:cli image. It will build
+    singularitynet/opencog-deps
+       and singularitynet/cogutil if they haven't been built, as they form its base
        images.
     -u This option signals all image builds to not use cache.
     -h This help message. \n" "$SELF_NAME"
 }
 
 # -----------------------------------------------------------------------------
-## Build opencog/opencog-deps image.
+## Build singularitynet/opencog-deps image.
 build_opencog_deps() {
-    echo "---- Starting build of opencog/opencog-deps ----"
-    docker build $CACHE_OPTION -t opencog/opencog-deps base
-    echo "---- Finished build of opencog/opencog-deps ----"
+    echo "---- Starting build of singularitynet/opencog-deps ----"
+    docker build $CACHE_OPTION -t singularitynet/opencog-deps base
+    echo "---- Finished build of singularitynet/opencog-deps ----"
 }
 
-## If the opencog/opencog-deps image hasn't been built yet then build it.
+## If the singularitynet/opencog-deps image hasn't been built yet then build it.
 check_opencog_deps() {
-    if [ -z "$(docker images opencog/opencog-deps | grep -i opencog-deps)" ]
+    if [ -z "$(docker images singularitynet/opencog-deps | grep -i opencog-deps)" ]
     then build_opencog_deps
     fi
 }
 
 # -----------------------------------------------------------------------------
-## Build opencog/cogutil image.
+## Build singularitynet/cogutil image.
 build_cogutil() {
     check_opencog_deps
-    echo "---- Starting build of opencog/cogutil ----"
-    docker build $CACHE_OPTION -t opencog/cogutil cogutil
-    echo "---- Finished build of opencog/cogutil ----"
+    echo "---- Starting build of singularitynet/cogutil ----"
+    docker build $CACHE_OPTION -t singularitynet/cogutil cogutil
+    echo "---- Finished build of singularitynet/cogutil ----"
 
 }
 
-## If the opencog/cogutil image hasn't been built yet then build it.
+## If the singularitynet/cogutil image hasn't been built yet then build it.
 check_cogutil() {
-    if [ -z "$(docker images opencog/cogutil | grep -i cogutil)" ]
+    if [ -z "$(docker images singularitynet/cogutil | grep -i cogutil)" ]
     then build_cogutil
     fi
 }
 
 # -----------------------------------------------------------------------------
-## Build opencog/opencog-dev:cli image.
+## Build singularitynet/opencog-dev:cli image.
 build_dev_cli() {
     check_cogutil
-    echo "---- Starting build of opencog/opencog-dev:cli ----"
-    docker build $CACHE_OPTION -t opencog/opencog-dev:cli tools/cli
-    echo "---- Finished build of opencog/opencog-dev:cli ----"
+    echo "---- Starting build of singularitynet/opencog-dev:cli ----"
+    docker build $CACHE_OPTION -t singularitynet/opencog-dev:cli tools/cli
+    echo "---- Finished build of singularitynet/opencog-dev:cli ----"
 }
 
-## If the opencog/opencog-dev:cli image hasn't been built yet then build it.
+## If the singularitynet/opencog-dev:cli image hasn't been built yet then build it.
 check_dev_cli() {
-    if [ -z "$(docker images opencog/opencog-dev:cli | grep -i opencog-dev)" ]
+    if [ -z "$(docker images singularitynet/opencog-dev:cli | grep -i opencog-dev)" ]
     then build_dev_cli
     fi
 }
@@ -95,11 +97,11 @@ check_dev_cli() {
 ## Pull all images needed for development from hub.docker.com/u/opencog/
 pull_dev_images() {
   echo "---- Starting pull of opencog development images ----"
-  docker pull opencog/opencog-deps
-  docker pull opencog/cogutil
-  docker pull opencog/opencog-dev:cli
-  docker pull opencog/postgres
-  docker pull opencog/relex
+  docker pull singularitynet/opencog-deps
+  docker pull singularitynet/cogutil
+  docker pull singularitynet/opencog-dev:cli
+  docker pull singularitynet/postgres
+  docker pull singularitynet/relex
   echo "---- Finished pull of opencog development images ----"
 }
 
@@ -146,35 +148,35 @@ fi
 
 if [ $BUILD_EMBODIMENT_IMAGE ] ; then
     check_dev_cli
-    echo "---- Starting build of opencog/minecraft ----"
-    docker build $CACHE_OPTION -t opencog/minecraft:0.1.0 minecraft
-    echo "---- Finished build of opencog/minecraft ----"
+    echo "---- Starting build of singularitynet/minecraft ----"
+    docker build $CACHE_OPTION -t singularitynet/minecraft:0.1.0 minecraft
+    echo "---- Finished build of singularitynet/minecraft ----"
 fi
 
 if [ $BUILD__MOSES_IMAGE ] ; then
     check_cogutil
-    echo "---- Starting build of opencog/moses ----"
-    docker build $CACHE_OPTION -t opencog/moses moses
-    echo "---- Finished build of opencog/moses ----"
+    echo "---- Starting build of singularitynet/moses ----"
+    docker build $CACHE_OPTION -t singularitynet/moses moses
+    echo "---- Finished build of singularitynet/moses ----"
 fi
 
 if [ $BUILD__POSTGRES_IMAGE ] ; then
-    echo "---- Starting build of opencog/postgres ----"
-    docker build $CACHE_OPTION -t opencog/postgres postgres
-    echo "---- Finished build of opencog/postgres ----"
+    echo "---- Starting build of singularitynet/postgres ----"
+    docker build $CACHE_OPTION -t singularitynet/postgres postgres
+    echo "---- Finished build of singularitynet/postgres ----"
 fi
 
 if [ $BUILD_RELEX_IMAGE ] ; then
-    echo "---- Starting build of opencog/relex ----"
-    docker build $CACHE_OPTION -t opencog/relex relex
-    echo "---- Finished build of opencog/relex ----"
+    echo "---- Starting build of singularitynet/relex ----"
+    docker build $CACHE_OPTION -t singularitynet/relex relex
+    echo "---- Finished build of singularitynet/relex ----"
 fi
 
 if [ $BUILD_JUPYTER_IMAGE ]; then
     check_dev_cli
-    echo "---- Starting build of opencog/jupyter ----"
-    docker build $CACHE_OPTION -t opencog/jupyter tools/jupyter_notebook
-    echo "---- Finished build of opencog/jupyter ----" 
+    echo "---- Starting build of singularitynet/jupyter ----"
+    docker build $CACHE_OPTION -t singularitynet/jupyter tools/jupyter_notebook
+    echo "---- Finished build of singularitynet/jupyter ----" 
 fi
 
 if [ $UNKNOWN_FLAGS ] ; then usage; exit 1 ; fi

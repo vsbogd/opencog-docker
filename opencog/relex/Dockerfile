@@ -93,7 +93,7 @@ RUN cd link-grammar-5.*/; mvn install:install-file \
 RUN rm -rf * link-grammar*
 
 # Relex -- changes often
-ADD https://github.com/opencog/relex/archive/master.tar.gz master.tar.gz
+ADD https://github.com/singnet/relex/archive/master.tar.gz master.tar.gz
 RUN tar -xvf master.tar.gz; cd relex-master; mvn install
 
 # Create and switch user. The user is privileged, with no password

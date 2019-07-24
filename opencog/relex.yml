@@ -1,7 +1,7 @@
 # Usage: Follow the steps in the README file in the directory containing this file
 
 relex:
-    image: opencog/relex
+    image: singularitynet/relex
     ports:
         - "4444:4444"
         - "9000:9000"
