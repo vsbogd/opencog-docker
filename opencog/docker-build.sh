@@ -166,7 +166,11 @@ fi
 
 if [ $BUILD__POSTGRES_IMAGE ] ; then
     echo "---- Starting build of singularitynet/postgres ----"
-    docker build $CACHE_OPTION -t singularitynet/postgres postgres
+    ATOM_SQL_OPTION=""
+    if [ ! -z "$ATOM_SQL_URL" ]; then
+        ATOM_SQL_OPTION="--build-arg ATOM_SQL_URL=$ATOM_SQL_URL"
+    fi
+    docker build $CACHE_OPTION $ATOM_SQL_OPTION -t singularitynet/postgres postgres
     echo "---- Finished build of singularitynet/postgres ----"
 fi
 
