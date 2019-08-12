@@ -172,7 +172,14 @@ fi
 
 if [ $BUILD_RELEX_IMAGE ] ; then
     echo "---- Starting build of singularitynet/relex ----"
-    docker build $CACHE_OPTION -t singularitynet/relex relex
+    RELEX_OPTIONS=""
+    if [ ! -z "$RELEX_REPO" ]; then
+        RELEX_OPTIONS="--build-arg RELEX_REPO=$RELEX_REPO"
+    fi
+    if [ ! -z "$RELEX_BRANCH" ]; then
+        RELEX_OPTIONS="$RELEX_OPTIONS --build-arg RELEX_BRANCH=$RELEX_BRANCH"
+    fi
+    docker build $CACHE_OPTION $RELEX_OPTIONS -t singularitynet/relex relex
     echo "---- Finished build of singularitynet/relex ----"
 fi
 
