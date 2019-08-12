@@ -49,7 +49,11 @@ printf "Usage: ./%s [OPTIONS]
 ## Build singularitynet/opencog-deps image.
 build_opencog_deps() {
     echo "---- Starting build of singularitynet/opencog-deps ----"
-    docker build $CACHE_OPTION -t singularitynet/opencog-deps base
+    OCPKG_OPTION=""
+    if [ ! -z "$OCPKG_URL" ]; then
+        OCPKG_OPTION="--build-arg OCPKG_URL=$OCPKG_URL"
+    fi
+    docker build $CACHE_OPTION $OCPKG_OPTION -t singularitynet/opencog-deps base
     echo "---- Finished build of singularitynet/opencog-deps ----"
 }
 
