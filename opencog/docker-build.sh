@@ -49,7 +49,11 @@ printf "Usage: ./%s [OPTIONS]
 ## Build singularitynet/opencog-deps image.
 build_opencog_deps() {
     echo "---- Starting build of singularitynet/opencog-deps ----"
-    docker build $CACHE_OPTION -t singularitynet/opencog-deps base
+    OCPKG_OPTION=""
+    if [ ! -z "$OCPKG_URL" ]; then
+        OCPKG_OPTION="--build-arg OCPKG_URL=$OCPKG_URL"
+    fi
+    docker build $CACHE_OPTION $OCPKG_OPTION -t singularitynet/opencog-deps base
     echo "---- Finished build of singularitynet/opencog-deps ----"
 }
 
@@ -162,13 +166,24 @@ fi
 
 if [ $BUILD__POSTGRES_IMAGE ] ; then
     echo "---- Starting build of singularitynet/postgres ----"
-    docker build $CACHE_OPTION -t singularitynet/postgres postgres
+    ATOM_SQL_OPTION=""
+    if [ ! -z "$ATOM_SQL_URL" ]; then
+        ATOM_SQL_OPTION="--build-arg ATOM_SQL_URL=$ATOM_SQL_URL"
+    fi
+    docker build $CACHE_OPTION $ATOM_SQL_OPTION -t singularitynet/postgres postgres
     echo "---- Finished build of singularitynet/postgres ----"
 fi
 
 if [ $BUILD_RELEX_IMAGE ] ; then
     echo "---- Starting build of singularitynet/relex ----"
-    docker build $CACHE_OPTION -t singularitynet/relex relex
+    RELEX_OPTIONS=""
+    if [ ! -z "$RELEX_REPO" ]; then
+        RELEX_OPTIONS="--build-arg RELEX_REPO=$RELEX_REPO"
+    fi
+    if [ ! -z "$RELEX_BRANCH" ]; then
+        RELEX_OPTIONS="$RELEX_OPTIONS --build-arg RELEX_BRANCH=$RELEX_BRANCH"
+    fi
+    docker build $CACHE_OPTION $RELEX_OPTIONS -t singularitynet/relex relex
     echo "---- Finished build of singularitynet/relex ----"
 fi
 

@@ -93,8 +93,10 @@ RUN cd link-grammar-5.*/; mvn install:install-file \
 RUN rm -rf * link-grammar*
 
 # Relex -- changes often
-ADD https://github.com/singnet/relex/archive/master.tar.gz master.tar.gz
-RUN tar -xvf master.tar.gz; cd relex-master; mvn install
+ARG RELEX_REPO=https://github.com/singnet/relex.git
+ARG RELEX_BRANCH=master
+RUN git clone --depth=1 -b $RELEX_BRANCH $RELEX_REPO relex
+RUN cd relex; mvn install
 
 # Create and switch user. The user is privileged, with no password
 # required.  That is, you can use sudo.
@@ -112,5 +114,5 @@ EXPOSE 4444
 ## link-grammar-server.sh port
 EXPOSE 9000
 
-WORKDIR /home/Downloads/relex-master/
+WORKDIR /home/Downloads/relex/
 CMD /bin/bash

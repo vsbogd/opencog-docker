@@ -5,7 +5,8 @@ FROM postgres:9.5
 # TODO:  Change to build time argument. See https://github.com/docker/docker/issues/13490
 ENV POSTGRES_PASSWORD="cheese"
 
-ADD https://raw.githubusercontent.com/singnet/atomspace/master/opencog/persist/sql/multi-driver/atom.sql /tmp/atom.sql
+ARG ATOM_SQL_URL=https://raw.githubusercontent.com/singnet/atomspace/master/opencog/persist/sql/multi-driver/atom.sql
+ADD $ATOM_SQL_URL /tmp/atom.sql
 
 COPY configure.sh /docker-entrypoint-initdb.d/
 COPY start.sh /
